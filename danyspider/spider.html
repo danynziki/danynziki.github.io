@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spider</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--red:#8b0000;--black:#040404;--white:#e8e8e8;}
+    html{scroll-behavior:smooth;}
+    html,html *{cursor:none !important;}
+    body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden;}
+
+    #cur{position:fixed;width:10px;height:10px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .12s,background .2s;}
+    #cur.big{transform:translate(-50%,-50%) scale(4);background:rgba(139,0,0,.4);}
+
+    /* BACK TRANSITION */
+    #back-overlay{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0;}
+    #back-overlay canvas{position:absolute;inset:0;width:100%;height:100%;}
+    #back-overlay.active{pointer-events:all;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:28px 48px;display:flex;align-items:center;justify-content:space-between;}
+    .nav-left{display:flex;align-items:center;gap:20px;}
+    .back-btn{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;transition:color .3s;font-family:'Inter',sans-serif;}
+    .back-btn:hover{color:rgba(255,255,255,.5);}
+    .nav-logo{font-family:'Inter',sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:.25em;text-transform:uppercase;color:var(--white);text-decoration:none;opacity:.9;}
+    .nav-logo span{color:var(--red);}
+
+    /* HERO */
+    #hero{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;}
+    .hero-bg{position:absolute;inset:0;z-index:0;}
+    .hero-bg video{position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-height:100vh;min-width:177.78vh;transform:translate(-50%,-50%);object-fit:cover;opacity:0;transition:opacity .8s ease;filter:brightness(.45) contrast(1.1);}
+    .hero-bg video.active{opacity:1;}
+    .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(4,4,4,1) 0%,rgba(4,4,4,.3) 40%,transparent 70%);}
+    .hero-overlay::before{content:'';position:absolute;inset:0;background:rgba(139,0,0,.06);}
+    .hero-content{position:absolute;bottom:72px;left:48px;z-index:3;}
+    .hero-tag{font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:16px;}
+    .hero-name{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(4rem,12vw,11rem);line-height:.9;letter-spacing:-.02em;color:var(--white);text-transform:uppercase;}
+    .hero-name .red{color:var(--red);}
+    .slide-dots{position:absolute;right:48px;bottom:72px;z-index:3;display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
+    .sdot{display:flex;flex-direction:column;align-items:center;gap:5px;}
+    .sdot-n{font-size:.42rem;letter-spacing:.1em;color:rgba(255,255,255,.2);font-family:'Inter',sans-serif;}
+    .sdot-bar{width:1px;height:22px;background:rgba(255,255,255,.1);position:relative;overflow:hidden;}
+    .sdot-fill{position:absolute;bottom:0;left:0;right:0;background:var(--red);height:0%;}
+    .sdot.active .sdot-n{color:rgba(255,255,255,.5);}
+    .sdot.active .sdot-bar{background:rgba(139,0,0,.4);}
+
+    /* GRILLE */
+    #work{padding-top:0;}
+    .work-header{padding:72px 48px 28px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-end;justify-content:space-between;}
+    .work-title{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(1.2rem,2.5vw,2rem);letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.7);}
+
+    .video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 2px 2px;}
+    .video-card{position:relative;aspect-ratio:16/9;overflow:hidden;background:#0a0a0a;display:block;text-decoration:none;}
+    .video-card.featured{grid-column:span 2;aspect-ratio:auto;min-height:400px;}
+    .card-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.16,1,.3,1),filter .4s;filter:brightness(.45) contrast(1.15) saturate(.8);z-index:1;}
+    .card-preview{position:absolute;inset:0;z-index:2;opacity:0;transition:opacity .4s ease;}
+    .card-preview video{width:100%;height:100%;object-fit:cover;filter:brightness(.4) contrast(1.2);}
+    .video-card:hover .card-preview{opacity:1;}
+    .video-card:hover .card-thumb{filter:brightness(.2) contrast(1.2) saturate(.6);transform:scale(1.04);}
+    .card-overlay{position:absolute;inset:0;z-index:3;background:linear-gradient(to top,rgba(0,0,0,.96) 0%,transparent 55%);opacity:0;transition:opacity .3s;}
+    .video-card:hover .card-overlay{opacity:1;}
+    .card-line{position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:5;}
+    .video-card:hover .card-line{transform:scaleX(1);}
+    .card-info{position:absolute;bottom:0;left:0;right:0;padding:20px 22px;z-index:4;transform:translateY(8px);transition:transform .35s cubic-bezier(.16,1,.3,1);}
+    .video-card:hover .card-info{transform:translateY(0);}
+    .card-artist{font-size:.48rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px;opacity:0;transition:opacity .2s .05s;}
+    .video-card:hover .card-artist{opacity:1;}
+    .card-title{font-family:'Inter',sans-serif;font-weight:700;font-size:clamp(.9rem,1.4vw,1.2rem);color:var(--white);text-transform:uppercase;letter-spacing:.05em;opacity:0;transition:opacity .2s .08s;}
+    .video-card:hover .card-title{opacity:1;}
+    .card-num{position:absolute;top:14px;right:14px;z-index:4;font-size:.65rem;font-weight:200;color:rgba(255,255,255,.1);letter-spacing:.08em;}
+    .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.7);opacity:0;transition:opacity .25s,transform .25s;width:44px;height:44px;border:1px solid rgba(139,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:4;}
+    .video-card:hover .play-icon{opacity:1;transform:translate(-50%,-50%) scale(1);}
+
+    footer{padding:24px 48px;border-top:1px solid rgba(255,255,255,.03);display:flex;justify-content:space-between;align-items:center;margin-top:80px;}
+    .footer-logo{font-family:'Inter',sans-serif;font-weight:900;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.1);}
+    .footer-logo span{color:rgba(139,0,0,.5);}
+    .footer-copy{font-size:.48rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.1);font-family:'Inter',sans-serif;}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1);}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:900px){
+      nav{padding:20px 24px;}
+      .hero-content{left:24px;bottom:48px;}.slide-dots{right:24px;}
+      .video-grid{grid-template-columns:1fr;}
+      .video-card.featured{grid-column:span 1;min-height:200px;}
+      .work-header{padding:48px 24px 20px;}
+      footer{padding:20px 24px;flex-direction:column;gap:8px;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="back-overlay"><canvas id="back-canvas"></canvas></div>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="back-btn" id="backBtn">← dany nziki</a>
+  </div>
+  <a href="index.html" class="nav-logo" id="backBtn2">SPID<span>E</span>R</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg">
+    <video src="zed_kadja.mp4" muted playsinline loop autoplay class="active"></video>
+    <video data-src="kidda.mp4" muted playsinline loop></video>
+    <video data-src="loyal.mp4" muted playsinline loop></video>
+    <video data-src="shleep.mp4" muted playsinline loop></video>
+    <video data-src="ziak.mp4" muted playsinline loop></video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Réalisateur · Alter ego</p>
+    <h1 class="hero-name">SPI<span class="red">D</span>ER</h1>
+  </div>
+  <div class="slide-dots">
+    <div class="sdot active" data-idx="0"><span class="sdot-n">01</span><div class="sdot-bar"><div class="sdot-fill" id="f0"></div></div></div>
+    <div class="sdot" data-idx="1"><span class="sdot-n">02</span><div class="sdot-bar"><div class="sdot-fill" id="f1"></div></div></div>
+    <div class="sdot" data-idx="2"><span class="sdot-n">03</span><div class="sdot-bar"><div class="sdot-fill" id="f2"></div></div></div>
+    <div class="sdot" data-idx="3"><span class="sdot-n">04</span><div class="sdot-bar"><div class="sdot-fill" id="f3"></div></div></div>
+    <div class="sdot" data-idx="4"><span class="sdot-n">05</span><div class="sdot-bar"><div class="sdot-fill" id="f4"></div></div></div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="work-header reveal">
+    <h2 class="work-title">Clips</h2>
+  </div>
+  <div class="video-grid">
+    <a href="https://www.youtube.com/watch?v=5OPGAbQS0qo" target="_blank" class="video-card featured" data-year="2025">
+      <img class="card-thumb" src="https://img.youtube.com/vi/5OPGAbQS0qo/maxresdefault.jpg" alt="ZED KADJA"/>
+      <div class="card-preview"><video data-src="zed_kadja.mp4" muted playsinline loop></video></div>
+      <div class="card-overlay"></div>
+      <div class="card-line"></div>
+      <div class="play-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="#8b0000"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="card-info"><div class="card-artist">ZED ft. KADJA · 2025</div><div class="card-title">Freestyle Nephilim</div></div>
+    </a>
+    <a href="https://youtu.be/t3-Mn136zIE" target="_blank" class="video-card" data-year="2025">
+      <img class="card-thumb" src="https://img.youtube.com/vi/t3-Mn136zIE/maxresdefault.jpg" alt="KIDDA"/>
+      <div class="card-preview"><video data-src="kidda.mp4" muted playsinline loop></video></div>
+      <div class="card-overlay"></div>
+      <div class="card-line"></div>
+      <div class="card-num">02</div>
+      <div class="play-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="#8b0000"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="card-info"><div class="card-artist">KIDDA · 2025</div><div class="card-title">Like Dat</div></div>
+    </a>
+    <a href="https://youtu.be/BvtkKi7HTrU" target="_blank" class="video-card" data-year="2025">
+      <img class="card-thumb" src="https://img.youtube.com/vi/BvtkKi7HTrU/maxresdefault.jpg" alt="ZED LOYAL"/>
+      <div class="card-preview"><video data-src="loyal.mp4" muted playsinline loop></video></div>
+      <div class="card-overlay"></div>
+      <div class="card-line"></div>
+      <div class="card-num">03</div>
+      <div class="play-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="#8b0000"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="card-info"><div class="card-artist">ZED · 2025</div><div class="card-title">Loyal</div></div>
+    </a>
+    <a href="https://youtu.be/btyqWa8_8DE" target="_blank" class="video-card" data-year="2025">
+      <img class="card-thumb" src="https://img.youtube.com/vi/btyqWa8_8DE/maxresdefault.jpg" alt="LEOSHLEEP"/>
+      <div class="card-preview"><video data-src="shleep.mp4" muted playsinline loop></video></div>
+      <div class="card-overlay"></div>
+      <div class="card-line"></div>
+      <div class="card-num">04</div>
+      <div class="play-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="#8b0000"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="card-info"><div class="card-artist">LEOSHLEEP · 2025</div><div class="card-title">Goat Talk / Chokehold</div></div>
+    </a>
+    <a href="https://youtu.be/Zl0AJDVyQv0" target="_blank" class="video-card" data-year="2025">
+      <img class="card-thumb" src="https://img.youtube.com/vi/Zl0AJDVyQv0/maxresdefault.jpg" alt="ZIAK Lieu et Heure"/>
+      <div class="card-preview"><video data-src="ziak.mp4" muted playsinline loop></video></div>
+      <div class="card-overlay"></div>
+      <div class="card-line"></div>
+      <div class="card-num">05</div>
+      <div class="play-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="#8b0000"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="card-info"><div class="card-artist">ZIAK · 2025</div><div class="card-title">Lieu et Heure</div></div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">SPID<span>E</span>R</div>
+  <div class="footer-copy">© 2026</div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+document.querySelectorAll('a,button,.video-card,.sdot').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+
+// BACK TRANSITION - toile inversée
+function triggerBack(e){
+  e.preventDefault();
+  const overlay=document.getElementById('back-overlay');
+  const canvas=document.getElementById('back-canvas');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  const ctx=canvas.getContext('2d');
+  overlay.classList.add('active');
+  const cx=window.innerWidth/2,cy=window.innerHeight/2;
+  const spokes=16,rings=12;
+  const maxR=Math.sqrt(cx*cx+cy*cy)*1.1;
+  let start=null;
+  const dur=1200;
+  function animate(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/dur,1);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='rgba(4,4,4,'+Math.min(p*1.3,0.98)+')';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle='rgba(139,0,0,'+(0.05+p*0.1)+')';
+    ctx.lineWidth=0.5;
+    for(let s=0;s<spokes;s++){
+      const angle=(s/spokes)*Math.PI*2;
+      ctx.beginPath();ctx.moveTo(cx,cy);
+      ctx.lineTo(cx+Math.cos(angle)*maxR,cy+Math.sin(angle)*maxR);ctx.stroke();
+    }
+    const ringsToDraw=Math.floor(p*rings);
+    for(let r=1;r<=ringsToDraw;r++){
+      const radius=(r/rings)*maxR;
+      ctx.beginPath();
+      for(let s=0;s<=spokes;s++){
+        const angle=(s/spokes)*Math.PI*2;
+        s===0?ctx.moveTo(cx+Math.cos(angle)*radius,cy+Math.sin(angle)*radius):ctx.lineTo(cx+Math.cos(angle)*radius,cy+Math.sin(angle)*radius);
+      }
+      ctx.closePath();ctx.stroke();
+    }
+    if(p<1){requestAnimationFrame(animate);}
+    else{setTimeout(()=>{window.location.href='index.html';},80);}
+  }
+  requestAnimationFrame(animate);
+}
+document.getElementById('backBtn').addEventListener('click',triggerBack);
+document.getElementById('backBtn2').addEventListener('click',triggerBack);
+
+// HERO
+const hvids=[...document.querySelectorAll('.hero-bg video')];
+const sdots=[...document.querySelectorAll('.sdot')];
+const fills=[0,1,2,3,4].map(i=>document.getElementById('f'+i));
+let hcur=0,rafId=null;
+function goSlide(n){
+  hvids[hcur].classList.remove('active');hvids[hcur].pause();
+  sdots[hcur].classList.remove('active');fills[hcur].style.height='0%';
+  if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+  hcur=n;
+  if(hvids[hcur].dataset.src){hvids[hcur].src=hvids[hcur].dataset.src;delete hvids[hcur].dataset.src;}
+  hvids[hcur].currentTime=0;hvids[hcur].play().catch(()=>{});
+  hvids[hcur].classList.add('active');sdots[hcur].classList.add('active');
+  startProgress();
+}
+function startProgress(){
+  if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+  function tick(){
+    const v=hvids[hcur];
+    if(!v.duration||isNaN(v.duration)){rafId=requestAnimationFrame(tick);return;}
+    const pct=Math.min(v.currentTime/v.duration*100,100);
+    fills[hcur].style.height=pct+'%';
+    if(pct<100){rafId=requestAnimationFrame(tick);}
+  }
+  rafId=requestAnimationFrame(tick);
+}
+hvids.forEach((v,i)=>{v.addEventListener('ended',()=>{fills[i].style.height='100%';goSlide((i+1)%hvids.length);});});
+sdots.forEach(d=>d.addEventListener('click',()=>{goSlide(parseInt(d.dataset.idx));}));
+hvids[0].play().catch(()=>{});
+startProgress();
+
+// PREVIEWS
+const previews=[];
+document.querySelectorAll('.video-card').forEach(card=>{
+  const v=card.querySelector('.card-preview video');
+  if(!v)return;
+  if(v.dataset.src){v.src=v.dataset.src;delete v.dataset.src;}
+  v.muted=true;v.playsInline=true;v.loop=true;v.preload='auto';
+  previews.push(v);
+  card.addEventListener('mouseenter',()=>{v.currentTime=0;v.play().catch(()=>{});});
+  card.addEventListener('mouseleave',()=>{v.pause();v.currentTime=0;});
+});
+function unlockAll(){previews.forEach(v=>v.play().then(()=>v.pause()).catch(()=>{}));}
+document.addEventListener('click',unlockAll,{once:true});
+document.addEventListener('scroll',unlockAll,{once:true});
+
+// REVEAL
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
