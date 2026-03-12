@@ -453,7 +453,7 @@
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // CURSOR
 const cur=document.getElementById('cur');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
@@ -528,24 +528,24 @@ document.getElementById('spBackBtn').addEventListener('click',()=>{
   });
 });
 
-// DANY HERO
+// DANY HERO — preload all videos upfront
 const hvids=[...document.querySelectorAll('.hero-bg video')];
 const sdots=[...document.querySelectorAll('.sdot')];
 const fills=[0,1,2,3,4,5].map(i=>document.getElementById('f'+i));
-let hcur=0,hraf=null;
+// preload all
+hvids.forEach(v=>{if(v.dataset.src){v.src=v.dataset.src;delete v.dataset.src;}v.load();});
+let hcur=0,hraf=null,hTimer=null;
+const SLIDE_DUR=12000;
 function goSlide(n){
   hvids[hcur].classList.remove('active');hvids[hcur].pause();
   sdots[hcur].classList.remove('active');fills[hcur].style.height='0%';
   if(hraf){cancelAnimationFrame(hraf);hraf=null;}
   if(hTimer){clearTimeout(hTimer);hTimer=null;}
   hcur=n;
-  if(hvids[hcur].dataset.src){hvids[hcur].src=hvids[hcur].dataset.src;delete hvids[hcur].dataset.src;}
   hvids[hcur].currentTime=0;hvids[hcur].play().catch(()=>{});
   hvids[hcur].classList.add('active');sdots[hcur].classList.add('active');
   startProg();
 }
-let hTimer=null;
-const SLIDE_DUR=12000;
 function startProg(){
   if(hraf){cancelAnimationFrame(hraf);hraf=null;}
   if(hTimer){clearTimeout(hTimer);hTimer=null;}
@@ -576,6 +576,8 @@ function initSpiderHero(){
   const svids=[...document.querySelectorAll('.sp-hero-bg video')];
   const ssdots=[...document.querySelectorAll('.sp-sdot')];
   const sfills=[0,1,2,3,4].map(i=>document.getElementById('sf'+i));
+  // preload all
+  svids.forEach(v=>{if(v.dataset.src){v.src=v.dataset.src;delete v.dataset.src;}v.load();});
   let scur=0,sraf=null,sTimer=null;
   function goSp(n){
     svids[scur].classList.remove('active');svids[scur].pause();
