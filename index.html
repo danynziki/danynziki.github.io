@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dany Nziki — Réalisateur</title>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=Inter:wght@300;400&family=Barlow+Condensed:ital,wght@1,800&display=swap" rel="stylesheet"/>
   <style>
     @font-face{font-family:'Akira';src:url('https://db.onlinewebfonts.com/t/3e9f64f9e8a4c54ea46419c9f24a0c45.woff2') format('woff2');font-weight:800;}
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -98,6 +98,8 @@
     .badge-new{position:absolute;top:14px;right:14px;z-index:4;font-size:.45rem;letter-spacing:.15em;text-transform:uppercase;background:var(--white);color:var(--black);padding:4px 9px;font-family:'Inter',sans-serif;}
     .badge-coup{position:absolute;top:14px;right:14px;z-index:4;font-size:.45rem;letter-spacing:.15em;text-transform:uppercase;background:rgba(176,30,74,.25);color:rgba(255,120,150,.9);padding:4px 9px;font-family:'Inter',sans-serif;border:1px solid rgba(176,30,74,.45);backdrop-filter:blur(6px);}
     .card-num{position:absolute;top:14px;right:14px;z-index:4;font-size:.75rem;font-weight:300;color:rgba(255,255,255,.15);letter-spacing:.1em;font-family:'Inter',sans-serif;}
+    .badge-pop{position:absolute;top:14px;right:14px;z-index:4;font-size:.45rem;letter-spacing:.15em;text-transform:uppercase;background:rgba(180,140,30,.22);color:rgba(255,210,80,.9);padding:4px 9px;font-family:'Inter',sans-serif;border:1px solid rgba(200,160,40,.4);backdrop-filter:blur(6px);}
+    .badge-sp-pop{position:absolute;top:14px;right:14px;z-index:4;font-size:.45rem;letter-spacing:.15em;text-transform:uppercase;background:rgba(180,140,30,.22);color:rgba(255,210,80,.9);padding:4px 9px;font-family:'Inter',sans-serif;border:1px solid rgba(200,160,40,.4);backdrop-filter:blur(6px);}
 
     #about{padding:110px 48px;border-top:1px solid rgba(255,255,255,.06);max-width:1400px;margin:0 auto;}
     .about-label{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:20px;font-family:'Inter',sans-serif;}
@@ -136,11 +138,11 @@
 
     #sp-hero{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;}
     .sp-hero-bg{position:absolute;inset:0;z-index:0;}
-    .sp-hero-bg video{position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-height:100vh;min-width:177.78vh;transform:translate(-50%,-50%);object-fit:cover;opacity:0;transition:opacity .8s ease;filter:brightness(.85) contrast(1.05);}
+    .sp-hero-bg video{position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-height:100vh;min-width:177.78vh;transform:translate(-50%,-50%);object-fit:cover;opacity:0;transition:opacity .8s ease;filter:brightness(.38) contrast(1.1);}
     .sp-hero-bg video.active{opacity:1;}
-    .sp-hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(3,3,3,.6) 0%,transparent 40%);}
+    .sp-hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(3,3,3,1) 0%,rgba(3,3,3,.1) 40%,transparent 70%);}
     .sp-hero-content{position:absolute;bottom:0;left:0;right:0;z-index:3;padding:0 48px 72px;}
-    .sp-hero-name{font-family:'Akira','Arial Black',sans-serif;font-weight:800;font-size:clamp(5rem,16vw,15rem);line-height:.85;letter-spacing:.02em;text-transform:uppercase;color:var(--white);}
+    .sp-hero-name{font-family:'Barlow Condensed','Arial Black',sans-serif;font-weight:800;font-style:italic;font-size:clamp(4rem,14vw,13rem);line-height:.9;letter-spacing:-.01em;text-transform:lowercase;color:var(--white);}
     .sp-slide-dots{position:absolute;right:48px;bottom:72px;z-index:3;display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
     .sp-sdot{display:flex;flex-direction:column;align-items:center;gap:5px;}
     .sp-sdot-n{font-size:.42rem;letter-spacing:.1em;color:rgba(255,255,255,.18);font-family:'Inter',sans-serif;}
@@ -221,12 +223,12 @@
 
   <section id="hero">
     <div class="hero-bg">
-      <video src="story.mp4" muted playsinline autoplay class="active"></video>
-      <video data-src="collabo.mp4" muted playsinline></video>
-      <video data-src="menteuse.mp4" muted playsinline></video>
-      <video data-src="je_t_haine.mp4" muted playsinline></video>
-      <video data-src="lettre_huamin.mp4" muted playsinline></video>
-      <video data-src="brave.mp4" muted playsinline></video>
+      <video src="story.mp4" data-url="https://youtu.be/Ie3Wc_SV2y4" muted playsinline autoplay class="active"></video>
+      <video data-src="collabo.mp4" data-url="https://youtu.be/HNMlja3_Y68" muted playsinline></video>
+      <video data-src="menteuse.mp4" data-url="https://youtu.be/2j-j5XFv6AI" muted playsinline></video>
+      <video data-src="je_t_haine.mp4" data-url="https://youtu.be/JWVtg2b61Mo" muted playsinline></video>
+      <video data-src="lettre_huamin.mp4" data-url="https://youtu.be/6ESI53m9NDI" muted playsinline></video>
+      <video data-src="brave.mp4" data-url="https://youtu.be/CGxYuQHwhS0" muted playsinline></video>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -284,7 +286,6 @@
       </a>
       <a href="https://youtu.be/nHfibbHSuUA" target="_blank" class="video-card" data-cat="clip" data-year="2025">
         <img class="card-thumb" src="https://img.youtube.com/vi/nHfibbHSuUA/maxresdefault.jpg" alt="JEENO Jada et Tupac"/>
-        <div class="card-preview"><video data-src="jada_tupac_extrait.mp4" muted playsinline loop></video></div>
         <div class="card-overlay"></div><div class="cat-badge">Clip Vidéo</div><div class="card-num">02</div>
         <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
         <div class="card-info"><div class="card-category">Clip · 2025</div><div class="card-title">JEENO — Jada et Tupac</div></div>
@@ -292,7 +293,7 @@
       <a href="https://youtu.be/Ie3Wc_SV2y4" target="_blank" class="video-card" data-cat="clip" data-year="2025">
         <img class="card-thumb" src="https://img.youtube.com/vi/Ie3Wc_SV2y4/maxresdefault.jpg" alt="ZIAK Story"/>
         <div class="card-preview"><video data-src="story.mp4" muted playsinline loop></video></div>
-        <div class="card-overlay"></div><div class="cat-badge">Clip Vidéo</div><div class="card-num">03</div>
+        <div class="card-overlay"></div><div class="cat-badge">Clip Vidéo</div><div class="badge-pop">Populaire</div>
         <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
         <div class="card-info"><div class="card-category">Clip · 2025</div><div class="card-title">ZIAK — Story</div></div>
       </a>
@@ -398,7 +399,7 @@
     <div class="reveal">
       <p class="contact-label">Contact</p>
       <h2 class="contact-big">danynziki.real<span class="italic">@gmail.com</span></h2>
-      <a href="/cdn-cgi/l/email-protection#e88c8986918692818381c69a8d8984a88f85898184c68b8785" class="contact-link">Envoyer un message <span>→</span></a>
+      <a href="/cdn-cgi/l/email-protection#2d494c43544357444644035f484c416d4a404c4441034e4240" class="contact-link">Envoyer un message <span>→</span></a>
     </div>
   </section>
 
@@ -427,20 +428,20 @@
         </a>
       </div>
     </div>
-    <div class="sp-logo">Spider</div>
+
   </nav>
 
   <section id="sp-hero">
     <div class="sp-hero-bg">
-      <video src="zed_kadja.mp4" muted playsinline autoplay class="active"></video>
-      <video data-src="kidda.mp4" muted playsinline></video>
-      <video data-src="loyal.mp4" muted playsinline></video>
-      <video data-src="shleep.mp4" muted playsinline></video>
-      <video data-src="ziak.mp4" muted playsinline></video>
+      <video src="zed_kadja.mp4" data-url="https://www.youtube.com/watch?v=5OPGAbQS0qo" muted playsinline autoplay class="active"></video>
+      <video data-src="kidda.mp4" data-url="https://youtu.be/t3-Mn136zIE" muted playsinline></video>
+      <video data-src="loyal.mp4" data-url="https://youtu.be/BvtkKi7HTrU" muted playsinline></video>
+      <video data-src="shleep.mp4" data-url="https://youtu.be/btyqWa8_8DE" muted playsinline></video>
+      <video data-src="ziak.mp4" data-url="https://youtu.be/Zl0AJDVyQv0" muted playsinline></video>
     </div>
     <div class="sp-hero-overlay"></div>
     <div class="sp-hero-content">
-      <h1 class="sp-hero-name">Spider</h1>
+      <h1 class="sp-hero-name"></h1>
     </div>
     <div class="sp-slide-dots">
       <div class="sp-sdot active" data-spidx="0"><span class="sp-sdot-n">01</span><div class="sp-sdot-bar"><div class="sp-sdot-fill" id="sf0"></div></div></div>
@@ -451,6 +452,10 @@
     </div>
   </section>
 
+  <div class="sp-contact-bar">
+    <a href="mailto:spidergraph237@gmail.com" class="sp-contact-email">spidergraph237@gmail.com</a>
+    <div class="sp-footer-logo">Spider</div>
+  </div>
 </div>
 
 <script>
@@ -528,44 +533,38 @@ document.getElementById('spBackBtn').addEventListener('click',()=>{
   });
 });
 
-// DANY HERO — preload all videos upfront
+// DANY HERO
 const hvids=[...document.querySelectorAll('.hero-bg video')];
 const sdots=[...document.querySelectorAll('.sdot')];
 const fills=[0,1,2,3,4,5].map(i=>document.getElementById('f'+i));
-// preload all
-hvids.forEach(v=>{if(v.dataset.src){v.src=v.dataset.src;delete v.dataset.src;}v.load();});
-let hcur=0,hraf=null,hTimer=null;
-const SLIDE_DUR=12000;
+document.getElementById('hero').style.cursor='pointer';
+document.getElementById('hero').addEventListener('click',e=>{
+  if(e.target.closest('.sdot,.slide-dots'))return;
+  const url=hvids[hcur].dataset.url;
+  if(url)window.open(url,'_blank');
+});
+let hcur=0,hraf=null;
 function goSlide(n){
   hvids[hcur].classList.remove('active');hvids[hcur].pause();
   sdots[hcur].classList.remove('active');fills[hcur].style.height='0%';
   if(hraf){cancelAnimationFrame(hraf);hraf=null;}
-  if(hTimer){clearTimeout(hTimer);hTimer=null;}
   hcur=n;
+  if(hvids[hcur].dataset.src){hvids[hcur].src=hvids[hcur].dataset.src;delete hvids[hcur].dataset.src;}
   hvids[hcur].currentTime=0;hvids[hcur].play().catch(()=>{});
   hvids[hcur].classList.add('active');sdots[hcur].classList.add('active');
   startProg();
 }
 function startProg(){
   if(hraf){cancelAnimationFrame(hraf);hraf=null;}
-  if(hTimer){clearTimeout(hTimer);hTimer=null;}
-  const startTime=performance.now();
-  function tick(now){
-    const elapsed=now-startTime;
+  function tick(){
     const v=hvids[hcur];
-    let pct;
-    if(v.duration&&!isNaN(v.duration)&&v.duration<SLIDE_DUR/1000){
-      pct=v.currentTime/v.duration*100;
-    } else {
-      pct=Math.min(elapsed/SLIDE_DUR*100,100);
-    }
-    fills[hcur].style.height=pct+'%';
-    if(pct<100)hraf=requestAnimationFrame(tick);
+    if(!v.duration||isNaN(v.duration)){hraf=requestAnimationFrame(tick);return;}
+    fills[hcur].style.height=Math.min(v.currentTime/v.duration*100,100)+'%';
+    if(v.currentTime<v.duration)hraf=requestAnimationFrame(tick);
   }
   hraf=requestAnimationFrame(tick);
-  hTimer=setTimeout(()=>{fills[hcur].style.height='100%';goSlide((hcur+1)%hvids.length);},SLIDE_DUR);
 }
-hvids.forEach((v,i)=>v.addEventListener('ended',()=>{if(i!==hcur)return;fills[i].style.height='100%';goSlide((i+1)%hvids.length);}));
+hvids.forEach((v,i)=>v.addEventListener('ended',()=>{fills[i].style.height='100%';goSlide((i+1)%hvids.length);}));
 sdots.forEach(d=>d.addEventListener('click',()=>goSlide(parseInt(d.dataset.idx))));
 hvids[0].play().catch(()=>{});startProg();
 
@@ -576,14 +575,11 @@ function initSpiderHero(){
   const svids=[...document.querySelectorAll('.sp-hero-bg video')];
   const ssdots=[...document.querySelectorAll('.sp-sdot')];
   const sfills=[0,1,2,3,4].map(i=>document.getElementById('sf'+i));
-  // preload all
-  svids.forEach(v=>{if(v.dataset.src){v.src=v.dataset.src;delete v.dataset.src;}v.load();});
-  let scur=0,sraf=null,sTimer=null;
+  let scur=0,sraf=null;
   function goSp(n){
     svids[scur].classList.remove('active');svids[scur].pause();
     ssdots[scur].classList.remove('active');sfills[scur].style.height='0%';
     if(sraf){cancelAnimationFrame(sraf);sraf=null;}
-    if(sTimer){clearTimeout(sTimer);sTimer=null;}
     scur=n;
     if(svids[scur].dataset.src){svids[scur].src=svids[scur].dataset.src;delete svids[scur].dataset.src;}
     svids[scur].currentTime=0;svids[scur].play().catch(()=>{});
@@ -592,26 +588,23 @@ function initSpiderHero(){
   }
   function sProg(){
     if(sraf){cancelAnimationFrame(sraf);sraf=null;}
-    if(sTimer){clearTimeout(sTimer);sTimer=null;}
-    const startTime=performance.now();
-    function tick(now){
-      const elapsed=now-startTime;
+    function tick(){
       const v=svids[scur];
-      let pct;
-      if(v.duration&&!isNaN(v.duration)&&v.duration<SLIDE_DUR/1000){
-        pct=v.currentTime/v.duration*100;
-      } else {
-        pct=Math.min(elapsed/SLIDE_DUR*100,100);
-      }
-      sfills[scur].style.height=pct+'%';
-      if(pct<100)sraf=requestAnimationFrame(tick);
+      if(!v.duration||isNaN(v.duration)){sraf=requestAnimationFrame(tick);return;}
+      sfills[scur].style.height=Math.min(v.currentTime/v.duration*100,100)+'%';
+      if(v.currentTime<v.duration)sraf=requestAnimationFrame(tick);
     }
     sraf=requestAnimationFrame(tick);
-    sTimer=setTimeout(()=>{sfills[scur].style.height='100%';goSp((scur+1)%svids.length);},SLIDE_DUR);
   }
-  svids.forEach((v,i)=>v.addEventListener('ended',()=>{if(i!==scur)return;sfills[i].style.height='100%';goSp((i+1)%svids.length);}));
+  svids.forEach((v,i)=>v.addEventListener('ended',()=>{sfills[i].style.height='100%';goSp((i+1)%svids.length);}));
   ssdots.forEach(d=>d.addEventListener('click',()=>goSp(parseInt(d.dataset.spidx))));
   svids[0].play().catch(()=>{});sProg();
+  document.getElementById('sp-hero').style.cursor='pointer';
+  document.getElementById('sp-hero').addEventListener('click',e=>{
+    if(e.target.closest('.sp-sdot,.sp-slide-dots'))return;
+    const url=svids[scur].dataset.url;
+    if(url)window.open(url,'_blank');
+  });
 }
 
 // PREVIEWS
@@ -648,4 +641,18 @@ const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersect
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 // NAV ACTIVE
-const navLinks=document.querySelectorA
+const navLinks=document.querySelectorAll('.nav-right a');
+window.addEventListener('scroll',()=>{
+  const sections=['hero','work','about','contact'];
+  let cur='';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&window.scrollY>=el.offsetTop-200)cur=id;
+  });
+  navLinks.forEach(a=>{
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
+  });
+});
+</script>
+</body>
+</html>
