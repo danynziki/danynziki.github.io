@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <script>
     const r=sessionStorage.getItem('redirect');
-    if(r){sessionStorage.removeItem('redirect');history.replaceState(null,null,r);}
+    if(r){sessionStorage.removeItem('redirect');try{history.replaceState(null,null,r);}catch(e){}}
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dany Nziki — Réalisateur</title>
@@ -47,11 +47,11 @@
     .nav-right a{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white);text-decoration:none;opacity:.4;transition:opacity .3s;font-family:'Inter',sans-serif;}
     .nav-right a:hover,.nav-right a.active{opacity:1;}
 
-    #hero{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;}
+    #hero{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;cursor:pointer;}
     .hero-bg{position:absolute;inset:0;z-index:0;}
     .hero-bg video{position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-height:100vh;min-width:177.78vh;transform:translate(-50%,-50%);object-fit:cover;opacity:0;transition:opacity 1s ease;}
     .hero-bg video.active{opacity:1;}
-    .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to right,rgba(8,8,8,.82) 28%,transparent 62%),linear-gradient(to top,rgba(8,8,8,.95) 0%,transparent 48%);}
+    .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to right,rgba(8,8,8,.82) 28%,transparent 62%),linear-gradient(to top,rgba(8,8,8,.95) 0%,transparent 48%);pointer-events:none;}
     .hero-content{position:absolute;bottom:80px;left:48px;z-index:3;}
     .hero-sub{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px;}
     .hero-identity{display:flex;align-items:center;gap:22px;margin-bottom:20px;}
@@ -155,7 +155,7 @@
     .sp-social:hover{opacity:.6;}
     .sp-social svg{width:14px;height:14px;fill:white;display:block;}
 
-    #sp-hero{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;}
+    #sp-hero{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;cursor:pointer;}
     .sp-hero-bg{position:absolute;inset:0;z-index:0;}
     .sp-hero-bg video{position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-height:100vh;min-width:177.78vh;transform:translate(-50%,-50%);object-fit:cover;opacity:0;transition:opacity .8s ease;}
     .sp-hero-bg video.active{opacity:1;}
@@ -234,12 +234,12 @@
 
   <section id="hero">
     <div class="hero-bg">
-      <video src="story.mp4" muted playsinline autoplay class="active"></video>
-      <video data-src="collabo.mp4" muted playsinline></video>
-      <video data-src="menteuse.mp4" muted playsinline></video>
-      <video data-src="je_t_haine.mp4" muted playsinline></video>
-      <video data-src="lettre_huamin.mp4" muted playsinline></video>
-      <video data-src="brave.mp4" muted playsinline></video>
+      <video src="story.mp4" muted playsinline autoplay class="active" data-yt="https://youtu.be/Ie3Wc_SV2y4"></video>
+      <video data-src="collabo.mp4" muted playsinline data-yt="https://youtu.be/HNMlja3_Y68"></video>
+      <video data-src="menteuse.mp4" muted playsinline data-yt="https://youtu.be/2j-j5XFv6AI"></video>
+      <video data-src="je_t_haine.mp4" muted playsinline data-yt="https://youtu.be/JWVtg2b61Mo"></video>
+      <video data-src="lettre_huamin.mp4" muted playsinline data-yt="https://youtu.be/6ESI53m9NDI"></video>
+      <video data-src="brave.mp4" muted playsinline data-yt="https://youtu.be/CGxYuQHwhS0"></video>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -507,11 +507,11 @@
 
   <section id="sp-hero">
     <div class="sp-hero-bg">
-      <video src="zed_kadja.mp4" muted playsinline autoplay class="active"></video>
-      <video data-src="kidda.mp4" muted playsinline></video>
-      <video data-src="loyal.mp4" muted playsinline></video>
-      <video data-src="shleep.mp4" muted playsinline></video>
-      <video data-src="ziak.mp4" muted playsinline></video>
+      <video src="zed_kadja.mp4" muted playsinline autoplay class="active" data-yt="https://www.youtube.com/watch?v=5OPGAbQS0qo"></video>
+      <video data-src="kidda.mp4" muted playsinline data-yt="https://youtu.be/t3-Mn136zIE"></video>
+      <video data-src="loyal.mp4" muted playsinline data-yt="https://youtu.be/BvtkKi7HTrU"></video>
+      <video data-src="shleep.mp4" muted playsinline data-yt="https://youtu.be/btyqWa8_8DE"></video>
+      <video data-src="ziak.mp4" muted playsinline data-yt="https://youtu.be/Zl0AJDVyQv0"></video>
     </div>
     <div class="sp-hero-overlay"></div>
     <div class="sp-hero-content">
@@ -661,7 +661,7 @@ window.addEventListener('popstate',e=>{
 if(window.location.pathname==='/spider'||window.location.pathname==='/spider/'){
   document.getElementById('dany-page').style.display='none';
   document.getElementById('spider-page').classList.add('visible');
-  history.replaceState({page:'spider'},'',' /spider');
+  try{history.replaceState({page:'spider'},'',' /spider');}catch(e){}
   document.addEventListener('DOMContentLoaded',()=>initSpiderHero(),{once:true});
   // Si DOM déjà prêt
   if(document.readyState!=='loading')initSpiderHero();
@@ -818,6 +818,36 @@ document.querySelectorAll('.order-btn').forEach(btn=>btn.addEventListener('click
     cards.forEach(c=>grid.appendChild(c));
   });
 }));
+
+// HERO CLICK / TAP
+function makeHeroTappable(heroId, bgSelector){
+  const hero=document.getElementById(heroId);
+  if(!hero)return;
+  let heroTapped=false;
+  hero.addEventListener('click',e=>{
+    // Ignore si clic sur les hero-cats ou les sdots
+    if(e.target.closest('.hero-cats,.slide-dots,.sp-slide-dots,.sp-nav'))return;
+    const active=hero.querySelector(bgSelector+' video.active');
+    if(!active||!active.dataset.yt)return;
+    if(window.innerWidth>900){
+      // Desktop → ouvre direct
+      window.open(active.dataset.yt,'_blank');
+    } else {
+      // Mobile → 1er tap joue, 2e tap ouvre
+      if(!heroTapped){
+        heroTapped=true;
+        active.play().catch(()=>{});
+      } else {
+        heroTapped=false;
+        window.open(active.dataset.yt,'_blank');
+      }
+      // Reset si on change de vidéo
+      active.addEventListener('ended',()=>{heroTapped=false;},{once:true});
+    }
+  });
+}
+makeHeroTappable('hero','.hero-bg');
+makeHeroTappable('sp-hero','.sp-hero-bg');
 
 // HERO CATS → filtre + scroll
 document.querySelectorAll('.hero-cat').forEach(cat=>cat.addEventListener('click',()=>{
