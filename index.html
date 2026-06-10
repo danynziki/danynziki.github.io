@@ -192,8 +192,21 @@
     .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s cubic-bezier(.16,1,.3,1);}
     .reveal.visible{opacity:1;transform:translateY(0);}
 
+    .nav-burger{display:none;position:fixed;top:26px;right:30px;z-index:905;flex-direction:column;gap:6px;background:none;border:none;padding:8px;cursor:pointer;mix-blend-mode:difference;}
+    .nav-burger span{display:block;width:26px;height:1.5px;background:#fff;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .25s;}
+    .nav-burger.open span:nth-child(1){transform:translateY(3.75px) rotate(45deg);}
+    .nav-burger.open span:nth-child(2){transform:translateY(-3.75px) rotate(-45deg);}
+    .mobile-menu{position:fixed;inset:0;z-index:850;background:rgba(8,8,8,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .45s ease;}
+    .mobile-menu.open{opacity:1;pointer-events:auto;}
+    .mobile-menu a{font-family:'Libre Baskerville',serif;font-size:2.1rem;color:#fff;text-decoration:none;opacity:.55;padding:12px 0;transition:opacity .3s;}
+    .mobile-menu a:active{opacity:1;}
+    .mobile-menu .mm-socials{display:flex;gap:24px;margin-top:36px;}
+    .mobile-menu .mm-socials a{padding:0;opacity:.4;}
+    .mobile-menu .mm-socials svg{width:20px;height:20px;fill:#fff;}
+
     @media(max-width:900px){
       nav{padding:20px 24px;}.nav-right{display:none;}
+      .nav-burger{display:flex;}
       .hero-content{left:24px;bottom:56px;}.slide-dots{right:24px;}
       .video-grid{grid-template-columns:1fr;}.video-card.featured,.video-card.solo{grid-column:span 1;min-height:220px;}
       #about{padding:72px 24px;}.stats{grid-template-columns:repeat(2,1fr);}
@@ -232,14 +245,25 @@
     </ul>
   </nav>
 
+  <button class="nav-burger" id="navBurger" aria-label="Menu"><span></span><span></span></button>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#work">Réalisations</a>
+    <a href="#about">À propos</a>
+    <a href="#contact">Contact</a>
+    <div class="mm-socials">
+      <a href="https://www.instagram.com/danynziki/" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      <a href="https://www.youtube.com/@DanyNziki/videos" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    </div>
+  </div>
+
   <section id="hero">
     <div class="hero-bg">
-      <video src="over.mov" muted playsinline autoplay class="active" data-yt="https://youtu.be/uH04w8iAWHI"></video>
-      <video data-src="story.mp4" muted playsinline data-yt="https://youtu.be/Ie3Wc_SV2y4"></video>
-      <video data-src="collabo.mp4" muted playsinline data-yt="https://youtu.be/HNMlja3_Y68"></video>
-      <video data-src="menteuse.mp4" muted playsinline data-yt="https://youtu.be/2j-j5XFv6AI"></video>
-      <video data-src="je_t_haine.mp4" muted playsinline data-yt="https://youtu.be/JWVtg2b61Mo"></video>
-      <video data-src="lettre_huamin.mp4" muted playsinline data-yt="https://youtu.be/6ESI53m9NDI"></video>
+      <video src="over.mov" poster="https://img.youtube.com/vi/uH04w8iAWHI/maxresdefault.jpg" muted playsinline autoplay class="active" data-yt="https://youtu.be/uH04w8iAWHI"></video>
+      <video data-src="ehx_tour_part_2.mp4" poster="https://img.youtube.com/vi/4aRKQ8bYoTg/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/4aRKQ8bYoTg"></video>
+      <video data-src="lettre_huamin.mp4" poster="https://img.youtube.com/vi/6ESI53m9NDI/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/6ESI53m9NDI"></video>
+      <video data-src="story.mp4" poster="https://img.youtube.com/vi/Ie3Wc_SV2y4/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/Ie3Wc_SV2y4"></video>
+      <video data-src="collabo.mp4" poster="https://img.youtube.com/vi/HNMlja3_Y68/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/HNMlja3_Y68"></video>
+      <video data-src="menteuse.mp4" poster="https://img.youtube.com/vi/2j-j5XFv6AI/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/2j-j5XFv6AI"></video>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -521,12 +545,12 @@
 
   <section id="sp-hero">
     <div class="sp-hero-bg">
-      <video src="moncler.mov" muted playsinline autoplay class="active" data-yt="https://youtu.be/3EUyHBlR_mg"></video>
-      <video data-src="zed_kadja.mp4" muted playsinline data-yt="https://www.youtube.com/watch?v=5OPGAbQS0qo"></video>
-      <video data-src="kidda.mp4" muted playsinline data-yt="https://youtu.be/t3-Mn136zIE"></video>
-      <video data-src="loyal.mp4" muted playsinline data-yt="https://youtu.be/BvtkKi7HTrU"></video>
-      <video data-src="shleep.mp4" muted playsinline data-yt="https://youtu.be/btyqWa8_8DE"></video>
-      <video data-src="ziak.mp4" muted playsinline data-yt="https://youtu.be/Zl0AJDVyQv0"></video>
+      <video src="moncler.mov" poster="https://img.youtube.com/vi/3EUyHBlR_mg/maxresdefault.jpg" muted playsinline autoplay class="active" data-yt="https://youtu.be/3EUyHBlR_mg"></video>
+      <video data-src="zed_kadja.mp4" poster="https://img.youtube.com/vi/5OPGAbQS0qo/maxresdefault.jpg" muted playsinline data-yt="https://www.youtube.com/watch?v=5OPGAbQS0qo"></video>
+      <video data-src="kidda.mp4" poster="https://img.youtube.com/vi/t3-Mn136zIE/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/t3-Mn136zIE"></video>
+      <video data-src="loyal.mp4" poster="https://img.youtube.com/vi/BvtkKi7HTrU/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/BvtkKi7HTrU"></video>
+      <video data-src="shleep.mp4" poster="https://img.youtube.com/vi/btyqWa8_8DE/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/btyqWa8_8DE"></video>
+      <video data-src="ziak.mp4" poster="https://img.youtube.com/vi/Zl0AJDVyQv0/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/Zl0AJDVyQv0"></video>
     </div>
     <div class="sp-hero-overlay"></div>
     <div class="sp-hero-content">
@@ -725,7 +749,7 @@ function initSpiderHero(){
   if(spInit)return;spInit=true;
   const svids=[...document.querySelectorAll('.sp-hero-bg video')];
   const ssdots=[...document.querySelectorAll('.sp-sdot')];
-  const sfills=[0,1,2,3,4].map(i=>document.getElementById('sf'+i));
+  const sfills=[0,1,2,3,4,5].map(i=>document.getElementById('sf'+i));
   let scur=0,sraf=null;
   function goSp(n){
     svids[scur].classList.remove('active');svids[scur].pause();
@@ -897,6 +921,19 @@ const navObs=new IntersectionObserver(entries=>{
   });
 },{threshold:0.3});
 sections.forEach(s=>navObs.observe(s));
+
+// MENU MOBILE
+const navBurger=document.getElementById('navBurger');
+const mobileMenu=document.getElementById('mobileMenu');
+if(navBurger&&mobileMenu){
+  function closeMenu(){navBurger.classList.remove('open');mobileMenu.classList.remove('open');document.body.style.overflow='';}
+  navBurger.addEventListener('click',()=>{
+    const open=navBurger.classList.toggle('open');
+    mobileMenu.classList.toggle('open',open);
+    document.body.style.overflow=open?'hidden':'';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(!a.closest('.mm-socials'))closeMenu();}));
+}
 </script>
 </body>
 </html>
