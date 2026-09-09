@@ -21,11 +21,9 @@
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
     :root{--white:#f5f5f5;--black:#080808;--grey:#888;}
     html{scroll-behavior:smooth;}
-    html,html *{cursor:none !important;}
+    a,button{cursor:pointer;}
     body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden;}
 
-    #cur{position:fixed;width:12px;height:12px;background:white;border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform .15s;}
-    #cur.big{transform:translate(-50%,-50%) scale(3.5);}
 
     /* TRANSITION */
     #web-overlay{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none;}
@@ -35,14 +33,15 @@
     #dany-page{}
 
     nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:30px 48px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:difference;}
+    #dany-page>nav{background:rgba(3,3,3,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);mix-blend-mode:difference;}
     .nav-left{display:flex;align-items:center;gap:18px;}
     .nav-logo{font-family:'Libre Baskerville',serif;font-size:1rem;letter-spacing:.08em;color:var(--white);text-decoration:none;}
     .nav-socials{display:flex;align-items:center;gap:10px;}
     .nav-social{display:flex;align-items:center;opacity:.3;transition:opacity .3s;text-decoration:none;}
     .nav-social:hover{opacity:.8;}
     .nav-social svg{width:14px;height:14px;fill:white;}
-    .spider-btn{font-size:17px;opacity:.55;transition:opacity .3s,transform .3s;line-height:1;display:inline-block;text-decoration:none;}
-    .spider-btn:hover{opacity:1;transform:scale(1.25);}
+    .spider-btn{font-family:'Inter',sans-serif;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--white);opacity:.75;transition:opacity .3s;line-height:1;display:inline-block;text-decoration:none;white-space:nowrap;margin-left:8px;}
+    .spider-btn:hover{opacity:1;}
     .nav-right{display:flex;gap:36px;list-style:none;}
     .nav-right a{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white);text-decoration:none;opacity:.4;transition:opacity .3s;font-family:'Inter',sans-serif;}
     .nav-right a:hover,.nav-right a.active{opacity:1;}
@@ -51,7 +50,7 @@
     .hero-bg{position:absolute;inset:0;z-index:0;}
     .hero-bg video{position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-height:100vh;min-width:177.78vh;transform:translate(-50%,-50%);object-fit:cover;opacity:0;transition:opacity 1s ease;}
     .hero-bg video.active{opacity:1;}
-    .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to right,rgba(8,8,8,.82) 28%,transparent 62%),linear-gradient(to top,rgba(8,8,8,.95) 0%,transparent 48%);pointer-events:none;}
+    .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to right,rgba(8,8,8,.82) 0%,rgba(8,8,8,.65) 12%,rgba(8,8,8,.25) 28%,transparent 44%),linear-gradient(to top,rgba(8,8,8,.95) 0%,transparent 48%);pointer-events:none;}
     .hero-content{position:absolute;bottom:80px;left:48px;z-index:3;}
     .hero-sub{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px;}
     .hero-identity{display:flex;align-items:center;gap:22px;margin-bottom:20px;}
@@ -217,10 +216,74 @@
       .sp-grid{grid-template-columns:1fr;}.sp-card.featured{grid-column:span 1;min-height:200px;}
       .sp-contact-bar{padding:48px 24px;flex-direction:column;gap:16px;}
     }
+
+    @media(max-width:600px){.nav-socials>.nav-social{display:none;}}
+
+    /* Une porte vidéo entre les deux portfolios */
+    .spider-portal{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:32px;min-height:260px;padding:42px 48px;overflow:hidden;background:#030303;color:#f5f5f5;text-decoration:none;border-top:1px solid #333;border-bottom:1px solid #333;}
+    .portal-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;z-index:-3;filter:grayscale(1) brightness(.55);transition:filter .7s,transform 1s;}
+    .spider-portal::before{content:'';position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(0,0,0,.9),rgba(0,0,0,.3) 60%,rgba(0,0,0,.65));}
+    .spider-portal::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#f5f5f5;transform:scaleY(0);transition:transform .5s;}
+    .spider-portal:hover::after,.spider-portal:focus-visible::after{transform:scaleY(1);}
+    .spider-portal:hover .portal-film,.spider-portal:focus-visible .portal-film{filter:grayscale(0) brightness(.75);transform:scale(1.035);}
+    .spider-portal-label{display:block;font-size:.52rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:16px;}
+    .spider-portal-name{display:block;font-family:'Impact','Arial Narrow',sans-serif;font-size:clamp(4rem,9vw,8rem);font-weight:900;line-height:.95;letter-spacing:.02em;}
+    .spider-portal-link{display:flex;align-items:center;gap:24px;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;}
+    .portal-arrow{display:flex;align-items:center;justify-content:center;width:62px;height:62px;border:1px solid rgba(255,255,255,.5);border-radius:50%;font-size:1.6rem;transition:background .3s,color .3s,transform .3s;}
+    .spider-portal:hover .portal-arrow{background:#f5f5f5;color:#080808;transform:translateX(5px);}
+    .spider-btn{border:1px solid rgba(255,255,255,.35);padding:9px 12px;opacity:1;}
+    @media(max-width:900px){.spider-portal{padding:32px 24px;min-height:280px;align-items:flex-start;flex-direction:column;gap:28px;}.portal-arrow{width:44px;height:44px;}.spider-portal-link{width:100%;justify-content:space-between;}.spider-btn{padding:8px;}}
+    @media(prefers-reduced-motion:reduce){.portal-film{display:none;}.spider-portal{background:#030303 url('tootatis-poster.jpg') center/cover;}.spider-portal *{transition:none;}}
+
+    .preview-sound{background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.65);font-family:'Inter',sans-serif;font-size:.55rem;letter-spacing:.12em;padding:8px 12px;text-transform:uppercase;cursor:pointer;}
+    .preview-sound:hover,.preview-sound[aria-pressed="true"]{border-color:#f5f5f5;color:#f5f5f5;}
+    .preview-sound:focus-visible{outline:2px solid #f5f5f5;outline-offset:4px;}
+    .sp-preview-tools{display:flex;justify-content:flex-end;padding:20px 48px;}
+    @media(max-width:900px){.sp-preview-tools{padding:16px 24px;}}
+
+    .preview-audio{display:flex;align-items:center;gap:14px;padding:12px 16px;border:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.06);flex-wrap:wrap;}
+    .preview-audio-label{font-size:.64rem;letter-spacing:.08em;color:#f5f5f5;}
+    .preview-audio .preview-sound{background:#f5f5f5;color:#080808;border-color:#f5f5f5;font-size:.6rem;}
+    .preview-audio .preview-sound[aria-pressed="true"]{background:transparent;color:#f5f5f5;}
+    .preview-volume-label{display:flex;align-items:center;gap:9px;font-size:.6rem;color:#ddd;}
+    .preview-volume{width:100px;accent-color:#f5f5f5;cursor:pointer;}
+    .preview-volume-value{min-width:34px;}
+    @media(max-width:600px){.preview-audio{gap:12px;width:100%;}.preview-volume-label{flex-basis:100%;}.preview-volume{flex:1;min-width:60px;}.filters-wrap{width:100%;}}
+
+    .preview-card-shell{position:relative;min-width:0;aspect-ratio:16/9;}
+    .preview-card-shell.featured{grid-column:span 2;aspect-ratio:auto;min-height:420px;}
+    .sp-grid>.preview-card-shell.featured{min-height:400px;}
+    .preview-card-shell.solo{grid-column:span 3;}
+    .preview-card-shell>.video-card,.preview-card-shell>.sp-card{width:100%;height:100%;min-height:0;aspect-ratio:auto;}
+    .preview-card-shell .card-info,.preview-card-shell .sp-card-info{padding-right:68px;}
+    .card-sound{position:absolute;right:14px;bottom:14px;z-index:6;width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+    .card-sound:hover,.card-sound[aria-pressed="true"]{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);color:var(--white);}
+    .card-sound svg{width:14px;height:14px;}
+    .card-sound:focus-visible{outline:2px solid white;outline-offset:3px;}
+    .card-sound .sound-on{display:none;}
+    .card-sound[aria-pressed="true"] .sound-on{display:block;}
+    .card-sound[aria-pressed="true"] .sound-off{display:none;}
+    .preview-card-shell:hover .card-preview,.preview-card-shell:hover .sp-card-preview{opacity:1;}
+    @media(max-width:900px){.preview-card-shell.featured,.preview-card-shell.solo{grid-column:span 1;min-height:220px;}.sp-grid>.preview-card-shell.featured{min-height:200px;}}
+
+    /* Conserver le bandeau flouté et estomper uniquement son bord inférieur. */
+    #dany-page>nav,.sp-nav{
+      -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 calc(100% - 14px),transparent 100%);
+      mask-image:linear-gradient(to bottom,#000 0%,#000 calc(100% - 14px),transparent 100%);
+    }
+    .hero-sound{position:absolute;right:46px;bottom:24px;z-index:5;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);backdrop-filter:blur(6px);color:#f5f5f5;cursor:pointer;}
+    .hero-sound:hover{background:rgba(255,255,255,.16);}
+    .hero-sound:focus-visible{outline:2px solid white;outline-offset:4px;}
+    .hero-sound .sound-on{display:none;}
+    .hero-sound[aria-pressed="true"] .sound-on{display:block;}
+    .hero-sound[aria-pressed="true"] .sound-off{display:none;}
+    @media(max-width:900px){.hero-sound{right:24px;bottom:12px;width:38px;height:38px;}}
+
+    .hero-bg,.sp-hero-bg{background-position:center;background-size:cover;background-repeat:no-repeat;}
+    .hero-bg video.media-failed,.sp-hero-bg video.media-failed{visibility:hidden;}
   </style>
 </head>
 <body>
-<div id="cur"></div>
 <div id="web-overlay"><canvas id="web-canvas"></canvas></div>
 
 <!-- ===== DANY NZIKI ===== -->
@@ -229,13 +292,14 @@
     <div class="nav-left">
       <a href="#hero" class="nav-logo">dany nziki</a>
       <div class="nav-socials">
+        <a href="https://www.tiktok.com/@spidergraph_" target="_blank" rel="noopener noreferrer" class="nav-social" title="TikTok Spider" aria-label="TikTok Spider"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 1h-3.7v14.7a3.2 3.2 0 1 1-2.8-3.2V8.7a7 7 0 1 0 6.5 7V8.2a9.2 9.2 0 0 0 5.4 1.7V6.2A5.7 5.7 0 0 1 16.6 1Z"/></svg></a>
         <a href="https://www.instagram.com/danynziki/" target="_blank" class="nav-social" title="Instagram">
           <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         </a>
         <a href="https://www.youtube.com/@DanyNziki/videos" target="_blank" class="nav-social" title="YouTube">
           <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </a>
-        <a href="#" class="spider-btn nav-social" id="spiderBtn" title="Spider">🕷</a>
+        <a href="#spider" class="spider-btn" id="spiderBtn" data-open-spider title="Voir les réalisations Spider">Spider →</a>
       </div>
     </div>
     <ul class="nav-right">
@@ -251,19 +315,20 @@
     <a href="#about">À propos</a>
     <a href="#contact">Contact</a>
     <div class="mm-socials">
+        <a href="https://www.tiktok.com/@spidergraph_" target="_blank" rel="noopener noreferrer" title="TikTok Spider" aria-label="TikTok Spider"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 1h-3.7v14.7a3.2 3.2 0 1 1-2.8-3.2V8.7a7 7 0 1 0 6.5 7V8.2a9.2 9.2 0 0 0 5.4 1.7V6.2A5.7 5.7 0 0 1 16.6 1Z"/></svg></a>
       <a href="https://www.instagram.com/danynziki/" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
       <a href="https://www.youtube.com/@DanyNziki/videos" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
     </div>
   </div>
 
   <section id="hero">
-    <div class="hero-bg">
-      <video src="over.mov" poster="https://img.youtube.com/vi/uH04w8iAWHI/maxresdefault.jpg" muted playsinline autoplay class="active" data-yt="https://youtu.be/uH04w8iAWHI"></video>
+    <div class="hero-bg" style="background-image:url(je-taime-poster.jpg)">
+      <video src="je-taime.mp4" poster="je-taime-poster.jpg" muted playsinline autoplay class="active" data-yt="https://youtu.be/JtcwHsj_vO8"></video>
+      <video data-src="over.mov" poster="https://img.youtube.com/vi/uH04w8iAWHI/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/uH04w8iAWHI"></video>
       <video data-src="ehx_tour_part_2.mp4" poster="https://img.youtube.com/vi/4aRKQ8bYoTg/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/4aRKQ8bYoTg"></video>
       <video data-src="lettre_huamin.mp4" poster="https://img.youtube.com/vi/6ESI53m9NDI/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/6ESI53m9NDI"></video>
       <video data-src="story.mp4" poster="https://img.youtube.com/vi/Ie3Wc_SV2y4/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/Ie3Wc_SV2y4"></video>
       <video data-src="collabo.mp4" poster="https://img.youtube.com/vi/HNMlja3_Y68/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/HNMlja3_Y68"></video>
-      <video data-src="menteuse.mp4" poster="https://img.youtube.com/vi/2j-j5XFv6AI/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/2j-j5XFv6AI"></video>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -289,6 +354,12 @@
     </div>
   </section>
 
+  <a href="#spider" class="spider-portal" data-open-spider aria-label="Ma face cachée — Spider">
+    <video class="portal-film" src="spider-apercu.mp4" poster="tootatis-poster.jpg" muted playsinline loop preload="metadata" aria-hidden="true"></video>
+    <span><span class="spider-portal-label">Ma face cachée</span><span class="spider-portal-name">SPIDER</span></span>
+    <span class="spider-portal-link"><span class="portal-arrow" aria-hidden="true">→</span></span>
+  </a>
+
   <section id="work">
     <div class="work-header reveal">
       <h2 class="work-title">Réalisations</h2>
@@ -300,6 +371,7 @@
           <button class="filter-btn" data-filter="court">Courts</button>
           <button class="filter-btn" data-filter="mariage">Mariages</button>
         </div>
+        
         <div class="order-bar">
           <button class="order-btn active" data-order="recent">↓ Récent</button>
           <button class="order-btn" data-order="ancien">↑ Ancien</button>
@@ -308,17 +380,24 @@
     </div>
 
     <div class="video-grid" id="gridAll">
+      <a href="https://youtu.be/JtcwHsj_vO8" target="_blank" class="video-card" data-cat="court" data-order="-1">
+        <img class="card-thumb" src="https://img.youtube.com/vi/JtcwHsj_vO8/maxresdefault.jpg" alt="Je t’aime"/>
+        <div class="card-preview"><video data-src="je-taime.mp4" poster="je-taime-poster.jpg" muted playsinline loop></video></div>
+        <div class="card-overlay"></div><div class="cat-badge">Court Métrage</div><div class="badge-new">Nouveau</div>
+        <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+        <div class="card-info"><div class="card-category">Court Métrage</div><div class="card-title">Je t’aime</div></div>
+      </a>
       <a href="https://youtu.be/uH04w8iAWHI" target="_blank" class="video-card featured" data-cat="clip" data-year="2025" data-order="1">
         <img class="card-thumb" src="https://img.youtube.com/vi/uH04w8iAWHI/maxresdefault.jpg" alt="JEENO Over"/>
         <div class="card-preview"><video data-src="over.mov" muted playsinline loop></video></div>
-        <div class="card-overlay"></div><div class="cat-badge">Clip Vidéo</div><div class="badge-new">Nouveau</div>
+        <div class="card-overlay"></div><div class="cat-badge">Clip Vidéo</div><div class="badge-coup">Coup de cœur</div>
         <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
         <div class="card-info"><div class="card-category">Clip · 2025</div><div class="card-title">JEENO — Over</div></div>
       </a>
       <a href="https://youtu.be/4aRKQ8bYoTg" target="_blank" class="video-card" data-cat="doc" data-year="2025" data-order="2">
         <img class="card-thumb" src="https://img.youtube.com/vi/4aRKQ8bYoTg/maxresdefault.jpg" alt="EHX Tour"/>
         <div class="card-preview"><video data-src="ehx_tour_part_2.mp4" muted playsinline loop></video></div>
-        <div class="card-overlay"></div><div class="cat-badge">Documentaire</div><div class="card-num">01</div>
+        <div class="card-overlay"></div><div class="cat-badge">Documentaire</div>
         <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
         <div class="card-info"><div class="card-category">Doc · 2025</div><div class="card-title">ZIAK — EHX Tour Part.2</div></div>
       </a>
@@ -373,6 +452,7 @@
       </a>
       <a href="https://youtu.be/v0iKgtgJGOs" target="_blank" class="video-card" data-cat="mariage" data-year="2023" data-order="10">
         <img class="card-thumb" src="https://img.youtube.com/vi/v0iKgtgJGOs/maxresdefault.jpg" alt="Karim Nafissa"/>
+        <div class="card-preview"><video data-src="Mariage%20-%20K%26N%20love.mp4" poster="https://img.youtube.com/vi/v0iKgtgJGOs/maxresdefault.jpg" muted playsinline loop></video></div>
         <div class="card-overlay"></div><div class="cat-badge">Mariage</div>
         <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
         <div class="card-info"><div class="card-category">Mariage · 2023</div><div class="card-title">Karim &amp; Nafissa</div></div>
@@ -388,7 +468,7 @@
       <a href="https://youtu.be/uH04w8iAWHI" target="_blank" class="video-card featured" data-cat="clip" data-year="2025" data-order="1">
         <img class="card-thumb" src="https://img.youtube.com/vi/uH04w8iAWHI/maxresdefault.jpg" alt="JEENO Over"/>
         <div class="card-preview"><video data-src="over.mov" muted playsinline loop></video></div>
-        <div class="card-overlay"></div><div class="cat-badge">Clip Vidéo</div><div class="badge-new">Nouveau</div>
+        <div class="card-overlay"></div><div class="cat-badge">Clip Vidéo</div><div class="badge-coup">Coup de cœur</div>
         <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
         <div class="card-info"><div class="card-category">Clip · 2025</div><div class="card-title">JEENO — Over</div></div>
       </a>
@@ -462,6 +542,13 @@
       <div class="cat-section-desc">Entre l'amour et la haine, il n'y a qu'un plan.</div>
     </div>
     <div class="video-grid" id="gridCourts">
+      <a href="https://youtu.be/JtcwHsj_vO8" target="_blank" class="video-card" data-cat="court" data-order="-1">
+        <img class="card-thumb" src="https://img.youtube.com/vi/JtcwHsj_vO8/maxresdefault.jpg" alt="Je t’aime"/>
+        <div class="card-preview"><video data-src="je-taime.mp4" poster="je-taime-poster.jpg" muted playsinline loop></video></div>
+        <div class="card-overlay"></div><div class="cat-badge">Court Métrage</div><div class="badge-new">Nouveau</div>
+        <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+        <div class="card-info"><div class="card-category">Court Métrage</div><div class="card-title">Je t’aime</div></div>
+      </a>
       <a href="https://youtu.be/6ESI53m9NDI" target="_blank" class="video-card featured" data-cat="court" data-year="2025" data-order="1">
         <img class="card-thumb" src="https://img.youtube.com/vi/6ESI53m9NDI/maxresdefault.jpg" alt="Lettre humain"/>
         <div class="card-preview"><video data-src="lettre_huamin.mp4" muted playsinline loop></video></div>
@@ -485,6 +572,7 @@
     <div class="video-grid" id="gridMariages">
       <a href="https://youtu.be/v0iKgtgJGOs" target="_blank" class="video-card solo" data-cat="mariage" data-year="2023">
         <img class="card-thumb" src="https://img.youtube.com/vi/v0iKgtgJGOs/maxresdefault.jpg" alt="Karim Nafissa"/>
+        <div class="card-preview"><video data-src="Mariage%20-%20K%26N%20love.mp4" poster="https://img.youtube.com/vi/v0iKgtgJGOs/maxresdefault.jpg" muted playsinline loop></video></div>
         <div class="card-overlay"></div><div class="cat-badge">Mariage</div>
         <div class="play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
         <div class="card-info"><div class="card-category">Mariage · 2023</div><div class="card-title">Karim &amp; Nafissa</div></div>
@@ -530,8 +618,9 @@
 <div id="spider-page">
   <nav class="sp-nav">
     <div class="sp-nav-left">
-      <button class="sp-back" id="spBackBtn">← dany nziki</button>
+      <button class="sp-back" id="spBackBtn">← Dany Nziki</button>
       <div class="sp-socials">
+        <a href="https://www.tiktok.com/@spidergraph_" target="_blank" rel="noopener noreferrer" class="sp-social" title="TikTok Spider" aria-label="TikTok Spider"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 1h-3.7v14.7a3.2 3.2 0 1 1-2.8-3.2V8.7a7 7 0 1 0 6.5 7V8.2a9.2 9.2 0 0 0 5.4 1.7V6.2A5.7 5.7 0 0 1 16.6 1Z"/></svg></a>
         <a href="https://www.instagram.com/spidergraph__/" target="_blank" class="sp-social" title="Instagram Spider">
           <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         </a>
@@ -544,12 +633,12 @@
   </nav>
 
   <section id="sp-hero">
-    <div class="sp-hero-bg">
-      <video src="moncler.mov" poster="https://img.youtube.com/vi/3EUyHBlR_mg/maxresdefault.jpg" muted playsinline autoplay class="active" data-yt="https://youtu.be/3EUyHBlR_mg"></video>
+    <div class="sp-hero-bg" style="background-image:url(tootatis-poster.jpg)">
+      <video src="johnny-tootatis.mp4" poster="tootatis-poster.jpg" muted playsinline autoplay class="active" data-yt="johnny-tootatis.mp4"></video>
+      <video data-src="moncler.mov" poster="https://img.youtube.com/vi/3EUyHBlR_mg/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/3EUyHBlR_mg"></video>
       <video data-src="zed_kadja.mp4" poster="https://img.youtube.com/vi/5OPGAbQS0qo/maxresdefault.jpg" muted playsinline data-yt="https://www.youtube.com/watch?v=5OPGAbQS0qo"></video>
       <video data-src="kidda.mp4" poster="https://img.youtube.com/vi/t3-Mn136zIE/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/t3-Mn136zIE"></video>
       <video data-src="loyal.mp4" poster="https://img.youtube.com/vi/BvtkKi7HTrU/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/BvtkKi7HTrU"></video>
-      <video data-src="shleep.mp4" poster="https://img.youtube.com/vi/btyqWa8_8DE/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/btyqWa8_8DE"></video>
       <video data-src="ziak.mp4" poster="https://img.youtube.com/vi/Zl0AJDVyQv0/maxresdefault.jpg" muted playsinline data-yt="https://youtu.be/Zl0AJDVyQv0"></video>
     </div>
     <div class="sp-hero-overlay"></div>
@@ -566,7 +655,15 @@
     </div>
   </section>
 
+  
   <div class="sp-grid">
+    <a href="johnny-tootatis.mp4" target="_blank" class="sp-card" rel="noopener">
+      <img class="sp-card-thumb" src="tootatis-poster.jpg" alt="Johnny — Tootatis"/>
+      <div class="sp-card-preview"><video data-src="johnny-tootatis.mp4" poster="tootatis-poster.jpg" muted playsinline loop></video></div>
+      <div class="sp-card-overlay"></div><div class="sp-card-line"></div><div class="badge-new">Nouveau</div>
+      <div class="sp-play"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="sp-card-info"><div class="sp-card-artist">Johnny</div><div class="sp-card-title">Tootatis</div></div>
+    </a>
     <a href="https://youtu.be/3EUyHBlR_mg" target="_blank" class="sp-card featured">
       <img class="sp-card-thumb" src="https://img.youtube.com/vi/3EUyHBlR_mg/maxresdefault.jpg" alt="KIDDA MONCLER"/>
       <div class="sp-card-preview"><video data-src="moncler.mov" muted playsinline loop></video></div>
@@ -595,13 +692,6 @@
       <div class="sp-play"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
       <div class="sp-card-info"><div class="sp-card-artist">ZED · 2025</div><div class="sp-card-title">Loyal</div></div>
     </a>
-    <a href="https://youtu.be/btyqWa8_8DE" target="_blank" class="sp-card">
-      <img class="sp-card-thumb" src="https://img.youtube.com/vi/btyqWa8_8DE/maxresdefault.jpg" alt="LEOSHLEEP"/>
-      <div class="sp-card-preview"><video data-src="shleep.mp4" muted playsinline loop></video></div>
-      <div class="sp-card-overlay"></div><div class="sp-card-line"></div><div class="sp-card-num">04</div>
-      <div class="sp-play"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
-      <div class="sp-card-info"><div class="sp-card-artist">LEOSHLEEP · 2025</div><div class="sp-card-title">Goat Talk / Chokehold</div></div>
-    </a>
     <a href="https://youtu.be/Zl0AJDVyQv0" target="_blank" class="sp-card">
       <img class="sp-card-thumb" src="https://img.youtube.com/vi/Zl0AJDVyQv0/maxresdefault.jpg" alt="ZIAK"/>
       <div class="sp-card-preview"><video data-src="ziak.mp4" muted playsinline loop></video></div>
@@ -618,13 +708,21 @@
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// CURSOR
-const cur=document.getElementById('cur');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-document.querySelectorAll('a,button,.video-card,.sp-card,.sdot,.sp-sdot').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
-});
+
+// APERÇU DU PASSAGE VERS SPIDER
+const portalFilm=document.querySelector('.portal-film');
+if(portalFilm){
+  const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const portalObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting&&!motionPreference.matches&&document.getElementById('dany-page').style.display!=='none'){
+        portalFilm.play().catch(()=>{});
+      }else{portalFilm.pause();}
+    });
+  },{threshold:.1});
+  portalObserver.observe(portalFilm);
+  motionPreference.addEventListener('change',()=>{if(motionPreference.matches)portalFilm.pause();});
+}
 
 // TRANSITION TOILE
 function drawWebTransition(onDone){
@@ -676,21 +774,21 @@ function drawWebTransition(onDone){
   requestAnimationFrame(animate);
 }
 
-document.getElementById('spiderBtn').addEventListener('click',e=>{
+document.querySelectorAll('[data-open-spider]').forEach(link=>link.addEventListener('click',e=>{
   e.preventDefault();
   drawWebTransition(()=>{
     document.getElementById('dany-page').style.display='none';
     document.getElementById('spider-page').classList.add('visible');
     document.getElementById('spider-page').scrollTop=0;
     initSpiderHero();
-    history.pushState({page:'spider'},'',' /spider');
+    history.pushState({page:'spider'},'',window.location.protocol==='file:'?'#spider':'/spider');
   });
-});
+}));
 document.getElementById('spBackBtn').addEventListener('click',()=>{
   drawWebTransition(()=>{
     document.getElementById('spider-page').classList.remove('visible');
     document.getElementById('dany-page').style.display='';
-    history.pushState({page:'dany'},'','/');
+    history.pushState({page:'dany'},'',window.location.protocol==='file:'?window.location.pathname:'/');
   });
 });
 window.addEventListener('popstate',e=>{
@@ -705,13 +803,12 @@ window.addEventListener('popstate',e=>{
 });
 
 // Accès direct à /spider
-if(window.location.pathname==='/spider'||window.location.pathname==='/spider/'){
+if(window.location.pathname==='/spider'||window.location.pathname==='/spider/'||window.location.hash==='#spider'){
   document.getElementById('dany-page').style.display='none';
   document.getElementById('spider-page').classList.add('visible');
-  try{history.replaceState({page:'spider'},'',' /spider');}catch(e){}
+  try{history.replaceState({page:'spider'},'',window.location.protocol==='file:'?'#spider':'/spider');}catch(e){}
   document.addEventListener('DOMContentLoaded',()=>initSpiderHero(),{once:true});
-  // Si DOM déjà prêt
-  if(document.readyState!=='loading')initSpiderHero();
+
 }
 
 // DANY HERO
@@ -776,52 +873,98 @@ function initSpiderHero(){
   svids[0].play().catch(()=>{});sProg();
 }
 
-// PREVIEWS
+// PREVIEWS — chaque carte commence et se termine sans son
 const allPrevs=[];
+let activePreview=null,previewRun=0;
+const speakerIcon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path class="sound-off" d="m16 9 6 6m0-6-6 6"/><path class="sound-on" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>';
+function updateCardSound(v){
+  const button=v._soundButton;
+  if(!button)return;
+  const enabled=!v.muted;
+  button.setAttribute('aria-pressed',String(enabled));
+  button.setAttribute('aria-label',enabled?'Couper le son de cet aperçu':'Activer le son de cet aperçu');
+  button.title=enabled?'Couper le son':'Activer le son';
+}
+function stopPreviews(){
+  previewRun++;
+  allPrevs.forEach(v=>{
+    v.muted=true;v.pause();try{v.currentTime=0;}catch(e){}
+    updateCardSound(v);
+    v.closest('.video-card,.sp-card').classList.remove('touch-active');
+  });
+  activePreview=null;
+}
+function playPreview(v){
+  silenceHeroes();
+  if(activePreview!==v){stopPreviews();activePreview=v;}
+  const run=previewRun;
+  v.volume=.65;
+  v.play().catch(()=>{
+    if(run!==previewRun||activePreview!==v)return;
+    v.muted=true;updateCardSound(v);
+  });
+}
 document.querySelectorAll('.video-card,.sp-card').forEach(card=>{
   const v=card.querySelector('.card-preview video,.sp-card-preview video');
   if(!v)return;
   if(v.dataset.src){v.src=v.dataset.src;delete v.dataset.src;}
   v.muted=true;v.playsInline=true;v.loop=true;v.preload='auto';
   allPrevs.push(v);
-  card.addEventListener('mouseenter',()=>{v.currentTime=0;v.play().catch(()=>{});});
-  card.addEventListener('mouseleave',()=>{v.pause();v.currentTime=0;});
-
-  // Mobile : swipe gauche ou droite = preview, tap simple = ouvre le lien
-  let touchStartX=0, touchStartY=0;
+  // Le bouton et le lien sont frères, pour éviter un bouton dans un lien.
+  const shell=document.createElement('div');
+  shell.className='preview-card-shell';
+  ['featured','solo'].forEach(c=>{if(card.classList.contains(c))shell.classList.add(c);});
+  card.parentNode.insertBefore(shell,card);shell.appendChild(card);
+  const button=document.createElement('button');
+  button.type='button';button.className='card-sound';
+  button.innerHTML=speakerIcon;
+  shell.appendChild(button);
+  function sync(){
+    button.setAttribute('aria-pressed',String(!v.muted));
+    button.setAttribute('aria-label',v.muted?'Activer le son de cet aperçu':'Couper le son de cet aperçu');
+    button.title=v.muted?'Activer le son':'Couper le son';
+  }
+  v._soundButton=button;
+  sync();
+  button.addEventListener('click',e=>{
+    e.preventDefault();e.stopPropagation();
+    const enable=activePreview!==v||v.muted;
+    if(activePreview!==v)playPreview(v);
+    allPrevs.forEach(other=>{if(other!==v){other.muted=true;other.pause();updateCardSound(other);}});
+    v.muted=!enable;sync();
+    card.classList.add('touch-active');
+    playPreview(v);
+  });
+  shell.addEventListener('mouseenter',()=>{
+    if(window.matchMedia('(hover: hover)').matches)playPreview(v);
+  });
+  shell.addEventListener('mouseleave',()=>{if(activePreview===v)stopPreviews();});
+  shell.addEventListener('focusout',e=>{if(!shell.contains(e.relatedTarget)&&activePreview===v)stopPreviews();});
+  card.addEventListener('click',()=>{if(activePreview===v)stopPreviews();});
+  let x=0,y=0;
   card.addEventListener('touchstart',e=>{
-    if(window.innerWidth>900)return;
-    touchStartX=e.touches[0].clientX;
-    touchStartY=e.touches[0].clientY;
+    x=e.touches[0].clientX;y=e.touches[0].clientY;
   },{passive:true});
   card.addEventListener('touchend',e=>{
     if(window.innerWidth>900)return;
-    const dx=e.changedTouches[0].clientX-touchStartX;
-    const dy=e.changedTouches[0].clientY-touchStartY;
-    // Ignore si c'est un scroll
+    const dx=e.changedTouches[0].clientX-x,dy=e.changedTouches[0].clientY-y;
     if(Math.abs(dy)>10&&Math.abs(dy)>Math.abs(dx))return;
     e.preventDefault();
-    if(card.classList.contains('touch-active')){
-      // 2e tap → ouvre le lien
-      const href=card.getAttribute('href');
+    if(card.classList.contains('touch-active')&&activePreview===v){
+      const href=card.getAttribute('href');stopPreviews();
       if(href&&href!=='#')window.open(href,'_blank');
-    } else {
-      // 1er tap → affiche la preview
-      document.querySelectorAll('.video-card,.sp-card').forEach(c=>{
-        if(c!==card){
-          c.classList.remove('touch-active');
-          const ov=c.querySelector('.card-preview video,.sp-card-preview video');
-          if(ov){ov.pause();ov.currentTime=0;}
-        }
-      });
-      card.classList.add('touch-active');
-      v.currentTime=0;v.play().catch(()=>{});
-    }
+    }else{playPreview(v);card.classList.add('touch-active');}
   },{passive:false});
 });
-function unlockAll(){allPrevs.forEach(v=>v.play().then(()=>v.pause()).catch(()=>{}));}
-document.addEventListener('click',unlockAll,{once:true});
-document.addEventListener('scroll',unlockAll,{once:true});
+const previewVisibility=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(activePreview&&!entry.isIntersecting&&entry.target.contains(activePreview))stopPreviews();});
+},{threshold:0});
+document.querySelectorAll('.preview-card-shell').forEach(el=>previewVisibility.observe(el));
+document.querySelectorAll('.filter-btn,.order-btn,[data-open-spider],#spBackBtn').forEach(el=>el.addEventListener('click',stopPreviews));
+window.addEventListener('popstate',stopPreviews);
+window.addEventListener('pagehide',stopPreviews);
+window.addEventListener('blur',stopPreviews);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopPreviews();});
 
 // FILTRES
 const gridAll=document.getElementById('gridAll');
@@ -862,7 +1005,7 @@ document.querySelectorAll('.order-btn').forEach(btn=>btn.addEventListener('click
       const ob=parseInt(b.dataset.order)||99;
       return order==='recent'?oa-ob:ob-oa;
     });
-    cards.forEach(c=>grid.appendChild(c));
+    cards.forEach(c=>grid.appendChild(c.closest('.preview-card-shell')||c));
   });
 }));
 
@@ -873,7 +1016,7 @@ function makeHeroTappable(heroId, bgSelector){
   let heroTapped=false;
   hero.addEventListener('click',e=>{
     // Ignore si clic sur les hero-cats ou les sdots
-    if(e.target.closest('.hero-cats,.slide-dots,.sp-slide-dots,.sp-nav'))return;
+    if(e.target.closest('.hero-cats,.slide-dots,.sp-slide-dots,.sp-nav,.hero-sound'))return;
     const active=hero.querySelector(bgSelector+' video.active');
     if(!active||!active.dataset.yt)return;
     if(window.innerWidth>900){
@@ -934,6 +1077,95 @@ if(navBurger&&mobileMenu){
   });
   mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(!a.closest('.mm-socials'))closeMenu();}));
 }
+// SON DES CARROUSELS — arrêt hors écran et priorité aux aperçus
+const heroAudioControllers=[];
+let heroAudioBusy=false;
+function silenceHeroes(){
+  heroAudioBusy=true;
+  heroAudioControllers.forEach(c=>c.silence());
+}
+function releaseHeroes(){heroAudioBusy=false;}
+['hero','sp-hero'].forEach(id=>{
+  const hero=document.getElementById(id);
+  if(!hero)return;
+  const videos=[...hero.querySelectorAll('.hero-bg video,.sp-hero-bg video')];
+  const button=document.createElement('button');
+  button.type='button';button.className='hero-sound';button.innerHTML=speakerIcon;
+  hero.appendChild(button);
+  let wanted=true,visible=false,attempt=0;
+  function render(){
+    const v=videos.find(v=>v.classList.contains('active'));
+    const on=!!v&&!v.muted&&!v.paused;
+    button.setAttribute('aria-pressed',String(on));
+    button.setAttribute('aria-label',on?'Couper le son du carrousel':'Activer le son du carrousel');
+    button.title=on?'Couper le son':'Activer le son';
+  }
+  function silence(){attempt++;videos.forEach(v=>v.muted=true);render();}
+  function apply(){
+    const token=++attempt;
+    const active=videos.find(v=>v.classList.contains('active'));
+    videos.forEach(v=>v.muted=true);
+    const shown=id==='hero'?document.getElementById('dany-page').style.display!=='none':document.getElementById('spider-page').classList.contains('visible');
+    if(!active||!shown||!visible||document.hidden||heroAudioBusy){render();return;}
+    active.muted=!wanted;active.volume=.65;
+    active.play().then(()=>{if(token===attempt)render();}).catch(error=>{
+      if(token!==attempt)return;
+      active.muted=true;
+      // Conserver le son souhaité : réessayer lors d’une interaction autorisée.
+      active.play().catch(()=>{});render();
+    });
+    render();
+  }
+  button.addEventListener('click',e=>{
+    e.preventDefault();e.stopPropagation();
+    const active=videos.find(v=>v.classList.contains('active'));
+    wanted=!active||active.muted;
+    stopPreviews();heroAudioBusy=false;
+    heroAudioControllers.forEach(c=>{if(c.apply!==apply)c.silence();});
+    apply();
+  });
+  videos.forEach(v=>v.addEventListener('play',render));
+  new MutationObserver(apply).observe(hero.querySelector('.hero-bg,.sp-hero-bg'),{subtree:true,attributes:true,attributeFilter:['class']});
+  new IntersectionObserver(entries=>{
+    visible=entries[0].isIntersecting&&entries[0].intersectionRatio>=.35;
+    apply();
+  },{threshold:[0,.35]}).observe(hero);
+  heroAudioControllers.push({apply,silence});
+  render();
+});
+document.querySelectorAll('.preview-card-shell').forEach(shell=>{
+  shell.addEventListener('mouseenter',silenceHeroes);
+  shell.addEventListener('touchstart',silenceHeroes,{passive:true});
+  shell.addEventListener('mouseleave',releaseHeroes);
+});
+document.querySelectorAll('[data-open-spider],#spBackBtn').forEach(el=>el.addEventListener('click',()=>{heroAudioControllers.forEach(c=>c.silence());heroAudioBusy=false;}));
+document.addEventListener('visibilitychange',()=>heroAudioControllers.forEach(c=>c.apply()));
+window.addEventListener('blur',()=>heroAudioControllers.forEach(c=>c.silence()));
+window.addEventListener('pagehide',()=>heroAudioControllers.forEach(c=>c.silence()));
+// Une interaction permet de retenter le son bloqué par la politique d’autoplay.
+// apply() respecte toujours le choix de couper le son et la visibilité du carrousel.
+function unlockHeroSound(event){
+  if(event.target.closest&&event.target.closest('.hero-sound,.card-sound,.preview-card-shell,[data-open-spider],#spBackBtn'))return;
+  heroAudioControllers.forEach(c=>c.apply());
+}
+document.addEventListener('click',unlockHeroSound);
+document.addEventListener('keydown',unlockHeroSound);
+
+
+// Une image reste visible si le média actif ne peut pas être chargé.
+document.querySelectorAll('.hero-bg,.sp-hero-bg').forEach(bg=>{
+  function showPoster(){
+    const active=bg.querySelector('video.active');
+    if(active&&active.poster)bg.style.backgroundImage='url('+JSON.stringify(active.poster)+')';
+  }
+  bg.querySelectorAll('video').forEach(v=>{
+    v.addEventListener('error',()=>{v.classList.add('media-failed');showPoster();});
+    v.addEventListener('loadeddata',()=>v.classList.remove('media-failed'));
+  });
+  new MutationObserver(showPoster).observe(bg,{subtree:true,attributes:true,attributeFilter:['class']});
+  showPoster();
+});
+
 </script>
 </body>
 </html>
