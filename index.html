@@ -290,6 +290,29 @@
       #dany-page .nav-socials{display:flex;flex-wrap:wrap;gap:10px;}
       #dany-page .nav-socials>.nav-social{display:flex;}
     }
+
+    /* Accueils sur téléphone : cadre moins haut, sans agrandissement basé sur 100vh. */
+    @media(max-width:600px) and (orientation:portrait){
+      #hero,#sp-hero{height:clamp(480px,125vw,640px);}
+      .hero-bg video,.sp-hero-bg video{
+        top:0;left:0;width:100%;height:100%;min-width:0;min-height:0;
+        transform:none;object-fit:cover;object-position:center;
+      }
+      #hero .hero-content{left:24px;right:24px;bottom:92px;}
+      #hero .hero-identity{gap:12px;margin-bottom:16px;}
+      #hero .hero-avatar{width:42px;height:42px;}
+      #hero .hero-name{font-size:clamp(2rem,8vw,3rem);}
+      #hero .hero-sub{margin-bottom:12px;}
+      #hero .hero-cats{gap:6px;}
+      #hero .hero-cat{font-size:.46rem;padding:5px 8px;}
+      #sp-hero .sp-hero-content{padding:0 24px 98px;}
+      #hero .slide-dots,#sp-hero .sp-slide-dots{
+        left:24px;right:82px;bottom:24px;flex-direction:row;
+        justify-content:space-between;align-items:flex-end;gap:8px;
+      }
+      #hero .sdot-bar,#sp-hero .sp-sdot-bar{height:18px;}
+      #hero .hero-sound,#sp-hero .hero-sound{right:24px;bottom:20px;}
+    }
   </style>
 </head>
 <body>
