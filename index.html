@@ -942,8 +942,8 @@ function syncExternalAudio(v){
   a.playbackRate=v.playbackRate;
   if(a.paused){
     const run=previewRun;
-    a.play().catch(()=>{
-      if(run!==previewRun||activePreview!==v)return;
+    a.play().catch(error=>{
+      if(run!==previewRun||activePreview!==v||error.name==='AbortError')return;
       a.muted=true;updateCardSound(v);
     });
   }
@@ -1011,6 +1011,16 @@ document.querySelectorAll('.video-card,.sp-card').forEach(card=>{
     allPrevs.forEach(other=>{if(other!==v){other.muted=true;other.pause();if(other._externalAudio){other._externalAudio.muted=true;other._externalAudio.pause();}updateCardSound(other);}});
     cardSoundTrack(v).muted=!enable;if(v._externalAudio)v.muted=true;sync();
     card.classList.add('touch-active');
+    if(v._externalAudio&&enable){
+      // Repartir ensemble et demander l’audio pendant le clic autorisé.
+      const a=v._externalAudio;
+      v.currentTime=0;a.currentTime=0;
+      const run=previewRun;
+      a.play().catch(error=>{
+        if(run!==previewRun||activePreview!==v||error.name==='AbortError')return;
+        a.muted=true;updateCardSound(v);
+      });
+    }
     playPreview(v);
     syncExternalAudio(v);
   });
